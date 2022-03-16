@@ -6,26 +6,29 @@ import id.vimona.blog.springcontext.domain.Mammals;
 import id.vimona.blog.springcontext.domain.Reptiles;
 import id.vimona.blog.springcontext.enums.AnimalType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.GenericApplicationContext;
 
 @Configuration
 public class AppAnimalConfig {
 
+    @Value("${animal.type}")
+    private String animalType;
+
     @Autowired
-    public void register(GenericApplicationContext context) {
-        Animal animal = getAnimalInstance(AnimalType.BIRDS);
+    public void register(AnnotationConfigApplicationContext context) {
+        Animal animal = getAnimalInstance();
         context.registerBean("animal", Animal.class, () -> animal);
     }
 
-    private Animal getAnimalInstance(AnimalType type) {
-        switch (type) {
-            case BIRDS:
-                return new Birds();
-            case MAMMALS:
-                return new Mammals();
-            case REPTILES:
-                return new Reptiles();
+    private Animal getAnimalInstance() {
+        if (AnimalType.BIRDS.name().equals(animalType)) {
+            return new Birds();
+        } else if (AnimalType.MAMMALS.name().equals(animalType)) {
+            return new Mammals();
+        } else if (AnimalType.REPTILES.name().equals(animalType)) {
+            return new Reptiles();
         }
         throw new IllegalArgumentException("Invalid of Animal Type.");
     }

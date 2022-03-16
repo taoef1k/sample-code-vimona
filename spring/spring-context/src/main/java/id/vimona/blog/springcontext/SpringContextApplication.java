@@ -1,6 +1,5 @@
 package id.vimona.blog.springcontext;
 
-import id.vimona.blog.springcontext.config.AppAnimalConfig;
 import id.vimona.blog.springcontext.domain.Animal;
 import id.vimona.blog.springcontext.domain.Car;
 import id.vimona.blog.springcontext.domain.Pet;
@@ -20,6 +19,9 @@ public class SpringContextApplication implements ApplicationRunner {
     @Autowired
     private Pet pet;
 
+    @Autowired
+    private AnnotationConfigApplicationContext context;
+
     public static void main(String[] args) {
         SpringApplication.run(SpringContextApplication.class, args);
     }
@@ -28,8 +30,6 @@ public class SpringContextApplication implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         System.out.println("Car brand : " + car.getBrand());
         System.out.println("Pet name : " + pet.getName());
-
-        var context = new AnnotationConfigApplicationContext(AppAnimalConfig.class);
         Animal animal = context.getBean("animal", Animal.class);
         System.out.println("Animal info : " + animal.getDescription());
     }

@@ -1,6 +1,5 @@
 package id.vimona.blog.springcontext;
 
-import id.vimona.blog.springcontext.config.AppAnimalConfig;
 import id.vimona.blog.springcontext.config.AppConfig;
 import id.vimona.blog.springcontext.domain.*;
 import id.vimona.blog.springcontext.enums.AnimalType;
@@ -29,7 +28,7 @@ public class Main {
     }
 
     private static AnnotationConfigApplicationContext registerBeans(AnimalType type) {
-        var context = new AnnotationConfigApplicationContext(AppAnimalConfig.class);
+        var context = new AnnotationConfigApplicationContext(AppConfig.class);
         Animal animal = getAnimalInstance(type);
         context.registerBean(Animal.class, () -> animal);
         return context;
